@@ -1,1 +1,15 @@
-/home/charles/.gitconfig
+[user]
+	email = cchamberlain@uchicago.edu
+	name = Charles Chamberlain
+[alias]
+  s = status
+  b = branch
+  c = commit
+  a = add .
+  co = checkout
+  l = log
+  d = diff
+[status]
+  color = auto
+[push]
+	default = simple

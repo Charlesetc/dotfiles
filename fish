@@ -1,1 +1,0 @@
-/home/charles/.config/fish
