@@ -21,12 +21,14 @@ NeoBundle 'fatih/vim-go'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'git@github.com:parkr/vim-jekyll.git'
-NeoBundle 'git@github.com:szw/vim-ctrlspace.git'
+"NeoBundle 'git@github.com:szw/vim-ctrlspace.git'
 NeoBundle 'git@github.com:dag/vim-fish.git'
+NeoBundle 'git@github.com:scrooloose/nerdcommenter.git'
 
 NeoBundle 'git@github.com:dag/vim-fish.git'
 NeoBundle 'git@github.com:guns/vim-clojure-static.git'
 NeoBundle 'git@github.com:goatslacker/mango.vim.git'
+
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
@@ -55,7 +57,6 @@ noremap <LEADER><S-p> "+p
 noremap <LEADER>p o<ESC>"+p
 noremap <LEADER>y "+yy
 noremap <LEADER>w :w<CR>
-noremap <LEADER>e :x<CR>
 noremap <LEADER>q :q!<CR>
 noremap <LEADER>s :%s/
 noremap <Leader>t :CtrlSpace<CR>
@@ -71,6 +72,7 @@ noremap <LEADER><ESC> <C-w>j:bd<CR>
 noremap <LEADER>o :CtrlP<CR>
 noremap <Leader>i :vsplit<CR>
 noremap <Leader>u :split<CR>
+noremap <Leader>* :vertical ball<CR>
 
 "" Remapping
 
@@ -81,8 +83,6 @@ noremap <S-k> e
 noremap <S-h> b
 noremap <S-l> e
 noremap <S-n> b
-noremap <C-v> v
-noremap v <C-v>
 noremap <S-m> j
 noremap n h
 nmap <Leader>j <C-w>j
