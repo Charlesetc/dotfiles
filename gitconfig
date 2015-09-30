@@ -1,6 +1,6 @@
 [user]
-	email = cchamberlain@uchicago.edu
-	name = Charles Chamberlain
+	email = charlespipin@gmail.com
+  name = Charles Chamberlain
 [alias]
   s = status
   b = branch
@@ -8,8 +8,9 @@
   a = add .
   co = checkout
   l = log
+  charles = "!f() { git clone git@github.com:Charlesetc/$1; }; f"
   d = diff
 [status]
   color = auto
-[push]
-	default = simple
+[color]
+	ui = true
