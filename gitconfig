@@ -4,7 +4,7 @@
 [alias]
   s = status
   b = branch
-  c = commit
+  c = commit -m
   a = add .
   co = checkout
   l = log
