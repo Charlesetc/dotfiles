@@ -19,11 +19,19 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle "rust-lang/rust.vim"
 NeoBundle "goatslacker/mango.vim"
-
-NeoBundle 'Shougo/neocomplete'
-
+NeoBundle 'solarnz/thrift.vim'
+NeoBundle 'git@github.com:fatih/vim-go.git'
+" NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'git@github.com:rking/ag.vim.git'
+NeoBundle 'git@github.com:xolox/vim-misc.git'
+NeoBundle 'git@github.com:nvie/vim-flake8.git'
+NeoBundle 'tpope/vim-commentary'
+NeoBundle 'mattn/webapi-vim'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'mattn/gist-vim'
+" NeoBundle 'airblade/vim-gitgutter'
 
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
@@ -33,10 +41,20 @@ call neobundle#end()
 
 " Required:
 filetype plugin indent on
+cmap w!! w !sudo tee > /dev/null %
+
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
+
+set clipboard=unnamed
+set incsearch
+
+set nu
+
+" FUZZY FINDER:
+set rtp+=~/.fzf
 
 let g:neocomplete#enable_at_startup = 1
 let g:acp_enableAtStartup = 0
@@ -45,8 +63,10 @@ let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#sources#syntax#min_keyword_length = 5
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+let g:easytags_async = 1
+let g:easytags_auto_update = 0
 
 set completeopt=menuone,menu,longest
 hi Pmenu ctermbg=black ctermfg=white
@@ -64,59 +84,71 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
  \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
 
+
 " Leader
 " Make space leader.
 let mapleader="\<SPACE>"
 noremap <SPACE> <Nop>
 
 " Copy and past to clipboard
-noremap <LEADER><S-p> "+p
-noremap <LEADER>p o<ESC>"+p
-noremap <LEADER>y "+yy
+noremap <LEADER>t <C-]>
 noremap <LEADER>w :w<CR>
 noremap <LEADER>q :q!<CR>
 noremap <LEADER>s :%s/
-noremap <Leader>t :CtrlSpace<CR>
 noremap <Leader><Tab> :bn<CR>
-noremap <Leader>ve :e ~/.vimrc<CR>
 noremap <Leader>vv :e ~/.vimrc<CR>
-noremap <Leader>e  :Exp<CR>
 noremap <Leader>x  :x<CR>
 noremap <Leader>vs :so ~/.vimrc<CR>
 noremap <Leader>d :bd<CR>
 noremap <Leader>r <Nop>
-noremap <Leader><ESC> <C-w>j:bd<CR>
-noremap <Leader>o :CtrlP<CR>
-noremap <Leader>i :vsplit<CR>
-noremap <Leader>u :split<CR>
+noremap <Leader><ESC> <C-w>j:close<CR>
+noremap <Leader>E :Exp<CR>
+noremap <Leader>o :FZF<CR>
+noremap <Leader>u :vsplit<CR>
+noremap <Leader>l :split<CR>
 noremap <Leader>* :vertical ball<CR>
+noremap <Leader>a :Ag <cword><CR>
+noremap <Leader>A :Ag 
+noremap <Leader>` <C-w>j:close<CR>
+noremap <Leader>/ :Commentary<CR>
+noremap <Leader>gb :Gblame<CR>
+
+" pretty awesome:
+noremap <Leader>ve ^i <ESC>vk$s
+noremap <Leader>vn a<CR><ESC>
+
+noremap <Leader>, :! ctags --file-scope=no -R `pwd`; mv tags ~/.vim_ctags<CR>
+set tags=~/.vim_ctags
 
 "" Remapping
 
 imap <S-TAB> <ESC>
 map <S-TAB> <ESC>
 nmap <S-TAB> i
-noremap <C-j> b
-noremap <C-k> e
+noremap <C-n> }
+noremap <C-e> {
 
-vmap i I
-vmap a A
+nnoremap < <<
+nnoremap > >>
+
+vnoremap i I
+vnoremap l I
+vnoremap a A
+
+nnoremap vw viw
+nnoremap cw ciw
+nnoremap dw ciw
+nnoremap vv V
 
 " Visual
 noremap <C-v> v
 noremap v <C-v>
-noremap <S-j> b
 
 " Moving around
-noremap <S-k> e
-noremap <S-h> b
-noremap <S-l> e
-noremap <S-n> b
-noremap <S-m> j
 
-nmap <Leader>j <C-w>j
-nmap <Leader>k <C-w>k
-nmap <Leader>l <C-w>l
+nmap <Leader>n <C-w>j
+nmap <Leader>e <C-w>k
+nmap <Leader>i <C-w>l
 nmap <Leader>h <C-w>h
 nmap <Leader>c :close<CR>
 " nmap <S-d> :<CR>
@@ -126,13 +158,6 @@ nmap <S-d> ciw
 " Maybe quite good
 nmap e $
 nmap b ^
-
-
-" Get off my lawn
-nnoremap <Left> :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up> :echoe "Use k"<CR>
-nnoremap <Down> :echoe "Use j"<CR>
 
 nnoremap <S-o> o<ESC>
 
@@ -150,6 +175,7 @@ syntax on
 colorscheme mango
 highlight Normal ctermfg=Black
 highlight Comment ctermfg=Gray
+highlight NonText ctermfg=Gray
 
 " Natural Splitting
 set splitbelow
@@ -175,15 +201,20 @@ set fillchars+=vert:\
 
 "" Spelling
 set complete+=kspell
-
-
 "" Languages
-" Go
+" Go        
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
 let g:go_imports_autosave = 1
 let g:go_doc_keywordprg_enabled = 0
 au FileType go nmap <leader>r <Plug>(go-test)
+
+" Python
+au FileType py set tabstop=8
+au FileType py set expandtab
+au FileType py set softtabstop=4
+au FileType py set shiftwidth=4
+au FileType py nmap <leader>r <Plug>(go-test)
 
 " Rust
 
@@ -197,3 +228,27 @@ let g:clojure_align_subforms = 1
 " Markdown
 autocmd BufNewFile,BufRead *.md set spell
 autocmd BufNewFile,BufRead *.markdown set spell
+
+nnoremap h h|xnoremap h h|onoremap h h|
+nnoremap n gj|xnoremap n gj|onoremap n gj|
+nnoremap e gk|xnoremap e gk|onoremap e gk|
+nnoremap i l|xnoremap i l|onoremap i l|
+
+nnoremap h h|xnoremap h h|onoremap h h|
+nnoremap j n|xnoremap j n|onoremap j n|
+nnoremap k e|xnoremap k e|onoremap k e|
+nnoremap l i|xnoremap l i|onoremap l i|
+
+nnoremap H H|xnoremap H H|onoremap H H|
+nnoremap J N|xnoremap J N|onoremap J N|
+nnoremap K E|xnoremap K E|onoremap K E|
+nnoremap L I|xnoremap L I|onoremap L I|
+
+nnoremap <C-k> <C-e>
+
+nnoremap <C-j> <C-y>
+
+nnoremap H b|xnoremap H b|onoremap H b|
+nnoremap N b|xnoremap N b|onoremap N b|
+nnoremap E e|xnoremap E e|onoremap E e|
+noremap I e|xnoremap I e|onoremap I e|
