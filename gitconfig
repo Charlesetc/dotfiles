@@ -5,7 +5,7 @@
   s = status
   b = branch
   c = commit -m
-  a = add .
+  a = add -A
   co = checkout
   l = log
   charles = "!f() { git clone git@github.com:Charlesetc/$1; }; f"

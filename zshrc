@@ -1,14 +1,17 @@
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/uber/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="arrow"
+export FZF_DEFAULT_COMMAND='ag -g ""'
+
+export PATH="/home/charles/.gem/ruby/2.3.0/bin:$PATH"
 
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -53,8 +56,6 @@ plugins=(git)
 
 
 # User configuration
-
-  export PATH="/home/uber/.go/bin:/home/uber/.go/bin:/usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/uber/fzf/bin:/home/uber/gocode/bin:/usr/local/go/bin:/home/uber/.rvm/bin:/home/uber/.rvm/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -81,8 +82,7 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias vimomz="vim ~/.oh-my-zsh"
 
 function fabtest() {
     . env/bin/activate
@@ -97,6 +97,7 @@ function vim() {
     then
       echo ""
     else
+      print -s vim $FILE
       /usr/bin/vim $FILE
     fi
   else
@@ -104,75 +105,52 @@ function vim() {
   fi
 }
 
-. ~/.scripts/zsh-hack
+function chpwd() {
+  echo "$(pwd)" > ~/.zsh_cd
+}
 
 
-# function sc() {
-#   PORT=4561
-#   if [ $1 -eq '-p' ]
-#   then
-#     PORT=$2
-#   fi
-#   schemaless-client -u
 alias vi=vim
 alias l=ls
 alias c=cd
 alias gits='git s'
 alias gitl='git l'
 alias .env='. env/bin/activate'
-alias .pypy='. pypyenv/bin/activate'
 alias .z='. ~/.zshrc'
-alias clip='tee >(nc localhost 5556) | nc localhost 5556'
 alias unquote='ruby -e "eval (\"puts \" + gets)"'
 
 alias tmux="tmux -2"
 alias s="ls"
-
-alias sc="schemaless-client -u4561 -dtrips"
-alias sa="schemaless-admin"
 alias jl="jq . | less"
 
-alias schema='tmux split-window -v; tmux resize-pane -y 10; tmux send-keys "cd ~/mezzanine; . env/bin/activate; fab serve" ENTER; tmux split-window -h; tmux send-keys "cd ~/trifle; . env/bin/activate; fab serve" ENTER; tmux select-pane -U'
-alias trident='tmux split-window -h; tmux resize-pane -x 40; tmux send-keys "cd ~/trident; . env/bin/activate; fab serve" ENTER; tmux select-pane -L'
-alias mez='tmux split-window -h; tmux resize-pane -x 40; tmux send-keys "cd ~/mezzanine; . env/bin/activate; fab serve" ENTER; tmux select-pane -L'
-alias api='tmux split-window -h; tmux resize-pane -x 40; tmux send-keys "cd ~/api; . env/bin/activate; fab serve" ENTER; tmux select-pane -L'
-# }
-
-# added by newengsetup
-export EDITOR=vim
-export GOPATH=~/.go
-export PATH=~/.go/bin:$PATH
-export UBER_HOME="$HOME/.uber"
-export UBER_DATACENTER=sjc1
-export UBER_OWNER="charlesc@uber.com"
-export VAGRANT_DEFAULT_PROVIDER=aws
-# [ -s "/usr/local/bin/virtualenvwrapper.sh" ] && . /usr/local/bin/virtualenvwrapper.sh
-# [ -s "$HOME/.nvm/nvm.sh" ] && . $HOME/.nvm/nvm.sh
-# if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-cdsync () {
-    cd $(boxer sync_dir $@)
-}
-editsync () {
-    $EDITOR $(boxer sync_dir $@)
-}
-opensync () {
-    open $(boxer sync_dir $@)
-}
-
-
-u_phab () {
-    hi="$@"
-    bash -c "cd ~/u_phab; ./u_phab \"$hi\""
-}
+alias lynx="lynx --accept_all_cookies"
 
 export LESS='-R'
 export LESSOPEN='|~/.lessfilter %s'
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-cowsay -f ~/.scripts/elephant.cow "opal" | lolcat
+# B careful
+xset r rate 200 30
+
+alias ys='yaourt --noconfirm -S'
+alias yr='yaourt -R'
+alias vundle='vim +PluginInstall +qall'
+alias vimz='vim ~/.zshrc'
+alias vimzh='vim ~/.zsh_history'
+alias vimv='vim ~/.vimrc'
+alias sl=ls
+alias net='sudo netctl start HOME'
+alias wifi='sudo wifi-menu'
+
+export EDITOR=vim
+
 
 setopt no_share_history
 
+cd $(cat ~/.zsh_cd)
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# OPAM configuration
+. /home/charles/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
