@@ -10,6 +10,8 @@
   l = log
   charles = "!f() { git clone git@github.com:Charlesetc/$1; }; f"
   d = diff
+  dh = diff HEAD
+  dhh = diff HEAD~ HEAD
 [status]
   color = auto
 [color]
