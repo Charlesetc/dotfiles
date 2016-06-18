@@ -1,17 +1,19 @@
 # Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="arrow"
 export FZF_DEFAULT_COMMAND='ag -g ""'
 
 export PATH="/home/charles/.gem/ruby/2.3.0/bin:$PATH"
 
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
+
+function cd_save_file() {
+  echo ~/.zsh_cd/$(basename "$TMUX").cd
+}
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -58,7 +60,6 @@ plugins=(git)
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
 
-source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -105,11 +106,6 @@ function vim() {
   fi
 }
 
-function chpwd() {
-  echo "$(pwd)" > ~/.zsh_cd
-}
-
-
 alias vi=vim
 alias l=ls
 alias c=cd
@@ -148,9 +144,57 @@ export EDITOR=vim
 
 setopt no_share_history
 
-cd $(cat ~/.zsh_cd)
+# OPAM configuration
+. /home/charles/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+
+setxkbmap us -variant colemak
+source "$HOME/.antigen/antigen.zsh"
+
+antigen-use oh-my-zsh
+antigen theme arrow
+
+antigen-apply
+alias execc='eval "$(cat /tmp/file)"'
+alias copyc='cat /tmp/file | xclip'
+alias catc='cat /tmp/file'
+
+function cdc() {
+  echo "$(pwd)" > $(cd_save_file)
+}
+
+setopt autocd
+
+function mux() {
+  if [ -z "$1" ]
+  then
+    tmux a
+  elif [ "$1" = "n" ]
+  then
+    tmux new -s $2
+  elif [ "$1" = "r" ]
+  then
+    tmux rename-session $2
+  elif [ "$1" = "a" ]
+  then
+    tmux attach -t $2
+  elif [ "$1" = "l" ]
+  then
+    tmux list-sessions
+  elif [ "$1" = "k" ]
+  then
+    tmux kill-session -t $2
+  elif [ "$1" = "d" ]
+  then
+    tmux detach
+  else
+    echo usage: mux [nralkd]
+  fi
+}
+
+alias task='vim ~/.tasks'
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# OPAM configuration
-. /home/charles/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+cd $(cat $(cd_save_file) 2> /dev/null)

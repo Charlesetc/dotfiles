@@ -1,24 +1,3 @@
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-if !empty(system('which opam'))
-  " Merlin plugin
-  let s:ocamlmerlin=substitute(system('opam config var share'),'\n$','','') . "/merlin"
-  execute "set rtp+=".s:ocamlmerlin."/vim"
-  execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
-  let g:syntastic_ocaml_checkers=['merlin']
-
-  " Reason plugin which uses Merlin
-  let s:reasondir=substitute(system('opam config var share'),'\n$','','') . "/reason"
-  execute "set rtp+=".s:reasondir."/editorSupport/VimReason"
-  let g:syntastic_reason_checkers=['merlin']
-else
-
-endif
-
-
-
-set nocompatible              " be iMproved, required
-filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -38,12 +17,33 @@ Plugin 'https://github.com/tpope/vim-commentary'
 
 Plugin 'sickill/vim-monokai'
 
+Plugin 'the-lambda-church/merlin'
+
 " Plugin 'https://github.com/facebook/reason/tree/master/editorSupport/VimReason'
 
 Plugin 'https://github.com/parkr/vim-jekyll'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+
+" if !empty(system('which opam'))
+"   " Merlin plugin
+"   let s:ocamlmerlin=substitute(system('opam config var share'),'\n$','','') . "/merlin"
+"   execute "set rtp+=".s:ocamlmerlin."/vim"
+"   execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
+"   let g:syntastic_ocaml_checkers=['merlin']
+
+"   " Reason plugin which uses Merlin
+"   let s:reasondir=substitute(system('opam config var share'),'\n$','','') . "/reason"
+"   execute "set rtp+=".s:reasondir."/editorSupport/VimReason"
+"   let g:syntastic_reason_checkers=['merlin']
+" else
+
+" endif
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
 
 set clipboard=unnamed
@@ -238,37 +238,38 @@ nnoremap dg <C-u>
 nnoremap gd <C-d>
 
 set background=light
-colorscheme mango
-highlight Normal ctermbg=None ctermfg=lightgrey
-highlight rustCommentLineDoc ctermfg=darkgrey
-highlight comment ctermfg=darkgrey
-highlight normal ctermfg=grey
-highlight identifier ctermfg=grey
-highlight function ctermfg=grey
-highlight constant ctermfg=grey
-highlight type ctermfg=grey
-highlight rustmodpath ctermfg=grey
-highlight number ctermfg=grey
-highlight operator ctermfg=grey
-highlight ruststorage ctermfg=grey
-highlight rustlifetime ctermfg=grey
-highlight rustmodpathsep ctermfg=grey
-highlight rustassert ctermfg=grey
-highlight rustsigil ctermfg=grey
-highlight panic ctermfg=grey
-highlight string ctermfg=white
-highlight rustattribute ctermfg=black
-highlight typedef ctermfg=grey
-highlight structure ctermfg=grey
-highlight boolean ctermfg=lightblue
+colorscheme monokai
+highlight Normal ctermbg=black ctermfg=lightgrey
+" highlight rustCommentLineDoc ctermfg=darkgrey
+" highlight comment ctermfg=darkgrey
+" highlight normal ctermfg=grey
+" highlight identifier ctermfg=grey
+" highlight function ctermfg=grey
+" highlight constant ctermfg=grey
+" highlight type ctermfg=grey
+" highlight rustmodpath ctermfg=grey
+" highlight number ctermfg=grey
+" highlight operator ctermfg=grey
+" highlight ruststorage ctermfg=grey
+" highlight rustlifetime ctermfg=grey
+" highlight rustmodpathsep ctermfg=grey
+" highlight rustassert ctermfg=grey
+" highlight rustsigil ctermfg=grey
+" highlight panic ctermfg=grey
+" highlight string ctermfg=white
+" highlight rustattribute ctermfg=black
+" highlight typedef ctermfg=grey
+" highlight structure ctermfg=grey
+" highlight boolean ctermfg=lightblue
 
-highlight keyword ctermfg=141 " purple
-highlight statement ctermfg=141
-highlight conditional ctermfg=141
-highlight storageclass ctermfg=141
-highlight repeat ctermfg=141
+" highlight keyword ctermfg=141 " purple
+" highlight statement ctermfg=141
+" highlight conditional ctermfg=141
+" highlight storageclass ctermfg=141
+" highlight repeat ctermfg=141
 
 highlight todo ctermfg=220 ctermbg=None
-highlight linenr ctermfg=black ctermbg=None
+highlight linenr ctermfg=darkgrey ctermbg=None
 highlight cursorlinenr ctermfg=74 ctermbg=None " blue
 set relativenumber
+au BufRead,BufNewFile *.re set filetype=rust

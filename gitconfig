@@ -16,3 +16,5 @@
   color = auto
 [color]
 	ui = true
+[push]
+	default = simple
