@@ -2,12 +2,14 @@ install:
 	cp vimrc ~/.vimrc
 	cp zshrc ~/.zshrc
 	cp gitconfig ~/.gitconfig
+	cp spacemacs ~/.spacemacs
 	cp tmux.conf ~/.tmux.conf
 
 save:
 	cp ~/.vimrc vimrc
 	cp ~/.zshrc zshrc
 	cp ~/.gitconfig gitconfig
+	cp ~/.spacemacs spacemacs
 	cp ~/.tmux.conf tmux.conf
 
 push:
