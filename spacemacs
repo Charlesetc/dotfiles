@@ -45,9 +45,9 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(fzf)
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(evil-search-highlight-persist)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -168,8 +168,7 @@ values."
 
    ;; I added these
    auto-save-interval 30 ; characters
-   auto-save-timeout 2 ; seconds
-
+   auto-save-timeout 1 ; seconds
 
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
@@ -261,7 +260,15 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+
   )
+
+(defun kill-a-window ()
+  "starts a fzf session."
+  (interactive)
+  (kill-buffer)
+  (delete-window))
+
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -270,6 +277,13 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+
+  (spacemacs/declare-prefix "o" "user-prefix")
+  (spacemacs/declare-prefix "d" "second-prefix")
+  (spacemacs/set-leader-keys "of" 'fzf)
+
+  (spacemacs/set-leader-keys "dd" 'kill-a-window)
 
   )
 
