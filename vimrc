@@ -271,5 +271,8 @@ highlight Normal ctermbg=black ctermfg=lightgrey
 highlight todo ctermfg=220 ctermbg=None
 highlight linenr ctermfg=darkgrey ctermbg=None
 highlight cursorlinenr ctermfg=74 ctermbg=None " blue
+
+highlight VertSplit ctermfg=black ctermbg=black
+
 set relativenumber
 au BufRead,BufNewFile *.re set filetype=rust

@@ -280,11 +280,35 @@ you should place your code here."
 
 
   (spacemacs/declare-prefix "o" "user-prefix")
-  (spacemacs/declare-prefix "d" "second-prefix")
   (spacemacs/set-leader-keys "of" 'fzf)
+  (spacemacs/set-leader-keys "d" 'kill-a-window)
 
-  (spacemacs/set-leader-keys "dd" 'kill-a-window)
 
+
+
+
+
+
+
+
+
+
+
+
+
+  ;; this part is for reason
+  (setq opam (substring (shell-command-to-string "opam config var prefix 2> /dev/null") 0 -1))
+  (add-to-list 'load-path (concat opam "/share/emacs/site-lisp"))
+  (setq refmt-command (concat opam "/bin/refmt"))
+
+  (require 'reason-mode)
+  (require 'merlin)
+  (setq merlin-ac-setup t)
+  (add-hook 'reason-mode-hook (lambda ()
+                                (add-hook 'before-save-hook 'refmt-before-save)
+                                (merlin-mode))) (spacemacs/set-leader-keys "dd" 'kill-a-window)
+
+  ;; end part for reason
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
