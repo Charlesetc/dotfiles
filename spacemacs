@@ -30,9 +30,12 @@ values."
      ;; better-defaults
      emacs-lisp
      haskell
+     org
+     scheme
      git
      ;; markdown
      clojure
+     themes-megapack
      ;; org
      (shell :variables
             shell-default-hight 30
@@ -45,7 +48,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(fzf)
+   dotspacemacs-additional-packages '(fzf hyde)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(evil-search-highlight-persist)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -112,11 +115,11 @@ values."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(spacemacs-dark
                          spacemacs-light
+                         tao-yang
+                         monokai
                          solarized-light
                          solarized-dark
-                         leuven
-                         monokai
-                         zenburn)
+                         )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -167,8 +170,8 @@ values."
    dotspacemacs-auto-save-file-location 'original
 
    ;; I added these
-   auto-save-interval 30 ; characters
-   auto-save-timeout 1 ; seconds
+   auto-save-interval 3000 ; characters
+   auto-save-timeout 30 ; seconds
 
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
@@ -266,7 +269,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 (defun kill-a-window ()
   "starts a fzf session."
   (interactive)
-  (kill-buffer)
+  (kill-this-buffer)
   (delete-window))
 
 
@@ -283,16 +286,32 @@ you should place your code here."
   (spacemacs/set-leader-keys "of" 'fzf)
   (spacemacs/set-leader-keys "d" 'kill-a-window)
 
+  (spacemacs/set-leader-keys "SPC" 'save-buffer)
+
+  ;; this is for powerline look
+  (setq powerline-default-separator 'slant)
+  (spaceline-compile)
+
+
+  ;; scrolling
+  (setq mouse-wheel-scroll-amount '(2 ((shift) . 1))) ;; two lines at a time
+  (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+  (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+
+
+  ;; org
+  (with-eval-after-load 'org
+    (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
+    (setq org-todo-keywords
+          '((sequence "NEXT" "PROGRESS" "|" "DONE" "DELEGATED")))
+    (setq org-startup-truncated nil)
+    )
 
 
 
 
 
-
-
-
-
-
+  (golden-ratio-mode)
 
 
 
@@ -301,12 +320,14 @@ you should place your code here."
   (add-to-list 'load-path (concat opam "/share/emacs/site-lisp"))
   (setq refmt-command (concat opam "/bin/refmt"))
 
+  (setq hyde-home "~/code/charlesetc.github.io/")
+  (require 'hyde)
   (require 'reason-mode)
-  (require 'merlin)
-  (setq merlin-ac-setup t)
+  ;; (require 'merlin)
+  (setq merlin-ac-setup nil)
   (add-hook 'reason-mode-hook (lambda ()
                                 (add-hook 'before-save-hook 'refmt-before-save)
-                                (merlin-mode))) (spacemacs/set-leader-keys "dd" 'kill-a-window)
+                                (merlin-mode)))
 
   ;; end part for reason
   )

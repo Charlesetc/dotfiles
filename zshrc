@@ -194,7 +194,11 @@ function mux() {
 
 alias task='vim ~/.tasks'
 
+alias ghci='stack ghci'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PROMPT='%c -> '
+export RPROMPT=''
 
 cd $(cat $(cd_save_file) 2> /dev/null)
