@@ -1,0 +1,9 @@
+imap yw <ESC>
+map <SPACE><SPACE> :w<CR>
+noremap <LEADER>w :w<CR>
+noremap <LEADER>q :q!<CR>
+noremap <LEADER>x :x!<CR>
+noremap <Leader>d :bd<CR>
+nnoremap <S-o> o<ESC>
+nnoremap < <<
+nnoremap > >>

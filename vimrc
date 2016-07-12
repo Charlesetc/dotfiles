@@ -112,10 +112,6 @@ noremap <C-e> {
 nnoremap < <<
 nnoremap > >>
 
-vnoremap i I
-vnoremap l I
-vnoremap a A
-
 nnoremap vw viw
 nnoremap cw ciw
 nnoremap dw ciw
@@ -128,18 +124,11 @@ noremap v <C-v>
 " Moving around
 nmap do ddeo
 
-nmap <Leader>n <C-w>j
-nmap <Leader>e <C-w>k
-nmap <Leader>i <C-w>l
+nmap <Leader>j <C-w>j
+nmap <Leader>k <C-w>k
+nmap <Leader>l <C-w>l
 nmap <Leader>h <C-w>h
 nmap <Leader>c :close<CR>
-" nmap <S-d> :<CR>
-nmap <S-d> ciw
-
-
-" Maybe quite good
-nmap e $
-nmap b ^
 
 nnoremap <S-o> o<ESC>
 
@@ -209,31 +198,7 @@ let g:clojure_align_subforms = 1
 autocmd BufNewFile,BufRead *.md set spell
 autocmd BufNewFile,BufRead *.markdown set spell
 
-nnoremap h h|xnoremap h h|onoremap h h|
-nnoremap n gj|xnoremap n gj|onoremap n gj|
-nnoremap e gk|xnoremap e gk|onoremap e gk|
-nnoremap i l|xnoremap i l|onoremap i l|
-
-nnoremap h h|xnoremap h h|onoremap h h|
-nnoremap j n|xnoremap j n|onoremap j n|
-nnoremap k e|xnoremap k e|onoremap k e|
-nnoremap l i|xnoremap l i|onoremap l i|
-
-nnoremap H H|xnoremap H H|onoremap H H|
-nnoremap J N|xnoremap J N|onoremap J N|
-nnoremap K E|xnoremap K E|onoremap K E|
-nnoremap L I|xnoremap L I|onoremap L I|
-
-nnoremap <C-k> <C-e>
-
-nnoremap <C-j> <C-y>
-
-nnoremap H b|xnoremap H b|onoremap H b|
-nnoremap N b|xnoremap N b|onoremap N b|
-nnoremap E e|xnoremap E e|onoremap E e|
-noremap I e|xnoremap I e|onoremap I e|
-
-
+" Fake scrolling
 nnoremap dg <C-u>
 nnoremap gd <C-d>
 
@@ -276,3 +241,6 @@ highlight VertSplit ctermfg=black ctermbg=black
 
 set relativenumber
 au BufRead,BufNewFile *.re set filetype=rust
+
+" awesome for colemak
+imap yw <ESC>
