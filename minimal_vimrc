@@ -1,3 +1,5 @@
+let mapleader="\<SPACE>"
+noremap <SPACE> <Nop>
 imap yw <ESC>
 map <SPACE><SPACE> :w<CR>
 noremap <LEADER>w :w<CR>
