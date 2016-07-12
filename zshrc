@@ -201,4 +201,6 @@ alias ghci='stack ghci'
 export PROMPT='%c -> '
 export RPROMPT=''
 
+alias spacemacs='bash -c "emacs &"'
+
 cd $(cat $(cd_save_file) 2> /dev/null)
