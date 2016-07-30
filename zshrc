@@ -19,14 +19,9 @@ export LESS_TERMCAP_ZV=$(tput rsubm)
 export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 
-export PATH="/home/charles/.gem/ruby/2.3.0/bin:$PATH"
-
+# export PATH="/home/charles/.gem/ruby/2.3.0/bin:$PATH" # export PATH="~/.nvm/versions/node/v6.3.0/bin:$PATH" 
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
-
-function cd_save_file() {
-  echo ~/.zsh_cd/$(basename "$TMUX").cd
-}
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -67,7 +62,7 @@ function cd_save_file() {
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+# plugins=(git)
 
 
 # User configuration
@@ -96,12 +91,7 @@ plugins=(git)
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias vimomz="vim ~/.oh-my-zsh"
-
-function fabtest() {
-    . env/bin/activate
-    fab test:"-k $1"
-}
+# alias vimomz="vim ~/.oh-my-zsh"
 
 function vim() {
   if [ "$#" -eq 0 ]
@@ -148,6 +138,7 @@ alias vundle='vim +PluginInstall +qall'
 alias vimz='vim ~/.zshrc'
 alias vimzh='vim ~/.zsh_history'
 alias vimv='vim ~/.vimrc'
+alias vimd='/usr/bin/vim'
 alias sl=ls
 alias net='sudo netctl start HOME'
 alias wifi='sudo wifi-menu'
@@ -161,19 +152,14 @@ setopt no_share_history
 . /home/charles/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 
-setxkbmap us -variant colemak
-source "$HOME/.antigen/antigen.zsh"
+# setxkbmap us -variant colemak
 
-antigen-use oh-my-zsh
-antigen theme arrow
-
-antigen-apply
 alias execc='eval "$(cat /tmp/file)"'
 alias copyc='cat /tmp/file | xclip'
 alias catc='cat /tmp/file'
 
-function cdc() {
-  echo "$(pwd)" > $(cd_save_file)
+function chpwd() {
+  echo "$(pwd)" > ~/.cdsavefile
 }
 
 setopt autocd
@@ -216,4 +202,15 @@ export RPROMPT=''
 
 alias spacemacs='bash -c "emacs &"'
 
-cd $(cat $(cd_save_file) 2> /dev/null)
+cd $(cat ~/.cdsavefile 2> /dev/null)
+export LS_COLORS=
+
+export NVM_DIR="/home/charles/.nvm3"
+. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+#antlr
+alias antlr4='java -jar /usr/local/lib/antlr-4.5.3-complete.jar'
+alias grun='java org.antlr.v4.gui.TestRig'
+
