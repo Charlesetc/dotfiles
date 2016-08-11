@@ -18,9 +18,20 @@ noremap <LEADER>q :q!<CR>
 noremap <LEADER>x :x!<CR>
 noremap <Leader>d :bd<CR>
 noremap <Leader>o :FZF<CR>
+noremap <Leader>i <c-w>v
+noremap <Leader>e <c-w>s
+noremap <Leader>j <c-w>j
+noremap <Leader>k <c-w>k
+noremap <Leader>h <c-w>h
+noremap <Leader>l <c-w>l
 nnoremap <S-o> o<ESC>
 nnoremap < <<
 nnoremap > >>
 syntax on
+set laststatus=0
+set fillchars+=vert:\ 
+set incsearch
+
+hi LineNr ctermfg=black ctermbg=None
 set background=dark
 colorscheme mango
