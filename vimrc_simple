@@ -1,0 +1,26 @@
+
+" Simple but usable vimrc
+
+" three dependancies required:
+" 1. mango colorscheme
+" 2. fzf
+" 3. pathogen
+
+
+execute pathogen#infect()
+
+let mapleader="\<SPACE>"
+noremap <SPACE> <Nop>
+imap yw <ESC>
+map <SPACE><SPACE> :w<CR>
+noremap <LEADER>w :w<CR>
+noremap <LEADER>q :q!<CR>
+noremap <LEADER>x :x!<CR>
+noremap <Leader>d :bd<CR>
+noremap <Leader>o :FZF<CR>
+nnoremap <S-o> o<ESC>
+nnoremap < <<
+nnoremap > >>
+syntax on
+set background=dark
+colorscheme mango
