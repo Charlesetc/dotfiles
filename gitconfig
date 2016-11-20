@@ -16,5 +16,5 @@
   color = auto
 [color]
 	ui = true
-[push]
-	default = simple
+[core]
+	excludesfile = /home/charles/.gitignore
