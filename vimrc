@@ -18,19 +18,27 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'goatslacker/mango.vim'
 " NeoBundle 'scrooloose/syntastic'
 " NeoBundle 'mkitt/tabline.vim'
-NeoBundle 'valloric/youcompleteme'
+NeoBundle 'eagletmt/neco-ghc'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-commentary'
-NeoBundle 'reedes/vim-colors-pencil'
+NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'ap/vim-buftabline'
 NeoBundle 'vim-scripts/restore_view.vim'
+NeoBundle 'reedes/vim-pencil'
+NeoBundle 'rust-lang/rust.vim'
+NeoBundle 'dleonard0/pony-vim-syntax'
 
-NeoBundle 'rgrinberg/vim-ocaml'
-NeoBundle 'let-def/ocp-indent-vim'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'MarcWeber/vim-addon-ocamldebug'
+" NeoBundle 'MarcWeber/vim-addon-ocamldebug'
 NeoBundle 'markcornick/vim-bats'
 NeoBundle 'raichoo/purescript-vim'
+NeoBundle 'vim-scripts/mom.vim'
+
+NeoBundle 'fatih/vim-go'
+
+NeoBundle 'neovimhaskell/haskell-vim'
+NeoBundle 'rgrinberg/vim-ocaml'
+NeoBundle 'let-def/ocp-indent-vim'
 
 " Folding
 " set foldmethod=indent
@@ -40,6 +48,11 @@ nnoremap <silent> ,n :call NextClosedFold('j')<cr>zz
 nnoremap <silent> ,p :call NextClosedFold('k')<cr>zz
 
 nnoremap % %%v%
+
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
+
+" let g:ycm_semantic_triggers = {'haskell' : ['.']}
 
 
 " My Bundles here:
@@ -55,11 +68,11 @@ filetype plugin indent on
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 
-if executable('ocamlmerlin')
-  " To set the log file and restart:
-  let s:ocamlmerlin=substitute(system('which ocamlmerlin'),'ocamlmerlin\n$','','') . "../share/ocamlmerlin/vim/"
-  execute "set rtp+=".s:ocamlmerlin
-endif
+" if executable('ocamlmerlin')
+"   " To set the log file and restart:
+"   let s:ocamlmerlin=substitute(system('which ocamlmerlin'),'ocamlmerlin\n$','','') . "../share/ocamlmerlin/vim/"
+"   execute "set rtp+=".s:ocamlmerlin
+" endif
 if executable('refmt')
   let s:reason=substitute(system('which refmt'),'refmt\n$','','') . "../share/reason/editorSupport/VimReason"
   execute "set rtp+=".s:reason
@@ -193,13 +206,12 @@ set splitright
 "set laststatus=2
 
 " Tabs (indent)
-set backspace=2
-set autoindent
-set expandtab
-set softtabstop=2
-set shiftwidth=2
+" set shiftwidth=2
+" set smartindent
+" set autoindent
 "set hlsearch  
-
+"
+"
 " Vertical split
 set laststatus=0
 set fillchars+=vert:\ 
@@ -226,8 +238,8 @@ au FileType py nmap <leader>r <Plug>(go-test)
 
 " Rust
 
-au FileType rs set tabstop=4
-au FileType rs set shiftwidth=4
+" au FileType rs set tabstop=4
+" au FileType rs set shiftwidth=4
 
 " Clojure 
 let g:clojure_align_multiline_strings = 1
@@ -242,56 +254,40 @@ autocmd BufNewFile,BufRead *.markdown set spell
 nnoremap dg <C-u>
 nnoremap gd <C-d>
 
-set background=dark
-colorscheme mango
-" set background=dark
-" " highlight rustCommentLineDoc ctermfg=darkgrey
-" highlight comment ctermfg=grey
-" highlight normal ctermfg=white
-" highlight identifier ctermfg=white
-" highlight function ctermfg=white
-" highlight constant ctermfg=white
-" highlight type ctermfg=white
-" highlight rustmodpath ctermfg=grey
-" highlight number ctermfg=grey
-" highlight operator ctermfg=grey
-" highlight ruststorage ctermfg=grey
-" highlight rustlifetime ctermfg=grey
-" highlight rustmodpathsep ctermfg=grey
-" highlight rustassert ctermfg=grey
-" highlight rustsigil ctermfg=grey
-" highlight panic ctermfg=grey
-" highlight string ctermfg=black
-" highlight character ctermfg=black
-" highlight rustattribute ctermfg=black
-" highlight typedef ctermfg=black
-" highlight structure ctermfg=black
-" highlight boolean ctermfg=black 
-" highlight keyword ctermfg=141 " purple
-highlight incsearch ctermbg=black ctermfg=lightgreen
-" highlight statement ctermfg=141
-" highlight conditional ctermfg=141
-" highlight storageclass ctermfg=141
-" highlight repeat ctermfg=141
-"
+if $TTYl != '/dev/pts/1'
+  highlight normal ctermbg=None ctermfg=grey
+  colorscheme bayQua
+  set background=light
+  hi identifier ctermfg=186
+  hi comment ctermfg=blue ctermbg=none
+  hi keyword ctermfg=4
+  hi constant ctermfg=5
+  hi preproc ctermfg=blue
+else
+  colorscheme mango
+  set relativenumber
+  set background=light
+endif
 
+highlight linenr ctermfg=darkgrey ctermbg=None
+
+highlight incsearch ctermbg=black ctermfg=lightgreen
 set nohlsearch
 
 highlight todo ctermfg=220 ctermbg=None
-highlight linenr ctermfg=darkgrey ctermbg=None
 highlight cursorlinenr ctermfg=74 ctermbg=None " blue
 
-highlight normal ctermbg=None
 
-highlight VertSplit ctermfg=black ctermbg=black
-
-highlight Visual ctermbg=lightgreen
-hi TabLine      ctermfg=lightgrey  ctermbg=None  cterm=NONE
+highlight Visual ctermbg=lightblue
+hi TabLine      ctermfg=235  ctermbg=None  cterm=NONE
 hi TabLineFill  ctermfg=Black  ctermbg=None     cterm=NONE
-hi TabLineSel   ctermfg=lightgrey  ctermbg=55  cterm=NONE
+hi TabLineSel   ctermfg=lightgrey  ctermbg=235  cterm=NONE
 hi Folded   ctermfg=75  ctermbg=Lightgrey  cterm=NONE
 
 " :syntax off
+
+command French setlocal spell spelllang=fr
+command English setlocal spell spelllang=en
 
 function! NextClosedFold(dir)
     let cmd = 'norm!z' . a:dir
@@ -309,13 +305,28 @@ endfunction
 
 autocmd BufWritePost *.re ReasonPrettyPrint
 
+
+let g:pencil#wrapModeDefault = 'hard'   " default is 'hard'
+" let g:pencil#textwidth = 50
+let g:pencil#autoformat = 1
+
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  " autocmd FileType text         call pencil#init({'wrap': 'hard'})
+augroup END
+
 hi EnclosingExpr ctermbg=None ctermfg=magenta
 
-set relativenumber
-" au BufRead,BufNewFile *.re set filetype=rust
+au BufRead,BufNewFile *.rs set filetype=rust
+au BufNewFile,BufRead *.eqn set filetype=groff
 
 let g:html_use_css = 1
 
 " awesome for colemak
 imap yw <ESC>
-" autocmd FileType ocaml source /home/charles/.opam/4.02.3/share/ocp-indent/vim/indent/ocaml.vim
+autocmd FileType ocaml source /home/charles/.opam/4.02.3/share/ocp-indent/vim/indent/ocaml.vim
+set backspace=2
+set expandtab
+set shiftwidth=2
+set softtabstop=2
