@@ -16,14 +16,26 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Let NeoBundle manage NeoBundle " Required:
 NeoBundleFetch 'Shougo/neobundle.vim' 
 NeoBundle 'goatslacker/mango.vim'
-" NeoBundle 'scrooloose/syntastic'
+NeoBundle 'flazz/vim-colorschemes'
 " NeoBundle 'mkitt/tabline.vim'
-NeoBundle 'valloric/youcompleteme'
+NeoBundle 'dleonard0/pony-vim-syntax'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-commentary'
+NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'reedes/vim-colors-pencil'
+NeoBundle 'reedes/vim-pencil'
+NeoBundle 'junegunn/goyo.vim'
+NeoBundle 'junegunn/limelight.vim'
+NeoBundle 'nanki/treetop.vim'
+NeoBundle 'reedes/vim-textobj-quote'
 NeoBundle 'ap/vim-buftabline'
-NeoBundle 'vim-scripts/restore_view.vim'
+NeoBundle 'elixir-lang/vim-elixir'
+NeoBundle 'fatih/vim-go'
+NeoBundle 'ElmCast/elm-vim'
+NeoBundle 'vito-c/jq.vim'
+" This screws up my searching:
+" Never use it.
+" NeoBundle 'vim-scripts/restore_view.vim'
 
 NeoBundle 'rgrinberg/vim-ocaml'
 NeoBundle 'let-def/ocp-indent-vim'
@@ -69,15 +81,11 @@ endif
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-let g:airline#extensions#tabline#enabled = 1
-
 set clipboard=unnamed
 set incsearch
 
 set nonu
 
-" FUZZY FINDER:
-set rtp+=~/.fzf
 
 let g:acp_enableAtStartup = 0
 " Use smartcase.
@@ -122,11 +130,10 @@ noremap <Leader>d :bd<CR>
 noremap <Leader>r <Nop>
 noremap <Leader><ESC> <C-w>j:close<CR>
 noremap <Leader>E :Exp<CR>
-noremap <Leader>o :FZF<CR>
 noremap <Leader>i :vsplit<CR>
 noremap <Leader>e :split<CR>
 noremap <Leader>* :vertical ball<CR>
-noremap <Leader>a :Ag <cword><CR>
+noremap <Leader>a g<C-g>
 noremap <Leader>A :Ag 
 noremap <Leader>` <C-w>j:close<CR>
 noremap <Leader>/ :Commentary<CR>
@@ -174,28 +181,23 @@ nnoremap <S-o> o<ESC>
 command! W w
 " command! Jekyll Jpost!
 
-
 "" Anonymous Settings
 
 " Syntax
 syntax on
 highlight Normal ctermfg=Black ctermbg=None
-highlight Comment ctermfg=Gray
+" highlight Comment ctermfg=Gray
 highlight NonText ctermfg=Gray
 
 " Natural Splitting
 set splitbelow
 set splitright
 
-"" Airline
-"let g:airline_powerline_fonts = 1
-"let g:airline_theme='ubaryd'
-"set laststatus=2
-
 " Tabs (indent)
 set backspace=2
 set autoindent
 set expandtab
+set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 "set hlsearch  
@@ -243,8 +245,11 @@ nnoremap dg <C-u>
 nnoremap gd <C-d>
 
 set background=dark
-colorscheme mango
-" set background=dark
+" colorscheme Tomorrow-Night-Eighties
+colorscheme MountainDew
+
+" hi comment ctermfg=violet
+" set background=light
 " " highlight rustCommentLineDoc ctermfg=darkgrey
 " highlight comment ctermfg=grey
 " highlight normal ctermfg=white
@@ -253,25 +258,25 @@ colorscheme mango
 " highlight constant ctermfg=white
 " highlight type ctermfg=white
 " highlight rustmodpath ctermfg=grey
-" highlight number ctermfg=grey
-" highlight operator ctermfg=grey
+" highlight number ctermfg=darkgrey
+" highlight operator ctermfg=white
 " highlight ruststorage ctermfg=grey
 " highlight rustlifetime ctermfg=grey
 " highlight rustmodpathsep ctermfg=grey
 " highlight rustassert ctermfg=grey
 " highlight rustsigil ctermfg=grey
 " highlight panic ctermfg=grey
-" highlight string ctermfg=black
+" highlight string ctermfg=white
 " highlight character ctermfg=black
 " highlight rustattribute ctermfg=black
 " highlight typedef ctermfg=black
 " highlight structure ctermfg=black
 " highlight boolean ctermfg=black 
-" highlight keyword ctermfg=141 " purple
-highlight incsearch ctermbg=black ctermfg=lightgreen
-" highlight statement ctermfg=141
-" highlight conditional ctermfg=141
-" highlight storageclass ctermfg=141
+" highlight keyword ctermfg=darkgray
+" highlight incsearch ctermbg=black ctermfg=lightgreen
+" highlight statement ctermfg=74
+" highlight conditional ctermfg=black
+" highlight storageclass ctermfg=black
 " highlight repeat ctermfg=141
 "
 
@@ -286,10 +291,18 @@ highlight normal ctermbg=None
 highlight VertSplit ctermfg=black ctermbg=black
 
 highlight Visual ctermbg=lightgreen
-hi TabLine      ctermfg=lightgrey  ctermbg=None  cterm=NONE
+hi TabLine      ctermfg=darkgrey  ctermbg=None  cterm=NONE
 hi TabLineFill  ctermfg=Black  ctermbg=None     cterm=NONE
-hi TabLineSel   ctermfg=lightgrey  ctermbg=55  cterm=NONE
+hi TabLineSel   ctermfg=white  ctermbg=black  cterm=NONE
 hi Folded   ctermfg=75  ctermbg=Lightgrey  cterm=NONE
+
+" hi Number ctermfg=68
+" hi Float ctermfg=68
+" hi preproc ctermfg=darkblue
+" hi matchparen ctermbg=33
+" hi Macro ctermfg=darkblue
+" hi include ctermfg=darkblue
+" hi define ctermfg=darkblue
 
 " :syntax off
 
@@ -309,13 +322,40 @@ endfunction
 
 autocmd BufWritePost *.re ReasonPrettyPrint
 
+function Writen()
+  :SoftPencil
+  " :colorscheme Tomorrow-Night-E
+  :call textobj#quote#init()
+  :Goyo
+  :hi normal ctermbg=black
+  :Limelight 0.6
+  :hi normal ctermbg=none
+  :set showtabline=0
+  :hi nontext ctermbg=none
+  :hi statusline ctermbg=none ctermfg=340
+  :hi statuslinenc ctermbg=none
+  :hi vertsplit ctermbg=none
+endfunction
+
+command Write exec Writen()
+command WW exec Writen()
+hi comment ctermfg=33
+
 hi EnclosingExpr ctermbg=None ctermfg=magenta
 
-set relativenumber
 " au BufRead,BufNewFile *.re set filetype=rust
+let g:textobj#quote#singleDefault = "''"
+let g:limelight_conceal_ctermfg = 0
 
 let g:html_use_css = 1
 
 " awesome for colemak
 imap yw <ESC>
 " autocmd FileType ocaml source /home/charles/.opam/4.02.3/share/ocp-indent/vim/indent/ocaml.vim
+set norelativenumber
+
+let mapleader="\<SPACE>"
+noremap <SPACE> <Nop>
+" FUZZY FINDER:
+set rtp+=~/.fzf
+noremap <Leader>o :FZF<CR>

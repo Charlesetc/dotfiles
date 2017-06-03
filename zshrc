@@ -1,10 +1,16 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.bin:$PATH
+export GOPATH=~/.go
+#
+export HOST='{pixel}'
 
 . ~/.profile
 
 # Path to your oh-my-zsh installation.
   export ZSH=/home/charles/.oh-my-zsh
+
+export LD_LIBRARY_PATH=/usr/local/lib:"$LD_LIBRARY_PATH"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -125,19 +131,19 @@ setopt EXTENDED_HISTORY
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 export FZF_DEFAULT_COMMAND='ag -g ""'
-export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
-export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
-export LESS_TERMCAP_me=$(tput sgr0)
-export LESS_TERMCAP_so=$(tput bold; tput setaf 3; tput setab 4) # yellow on blue
-export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
-export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 0) # black
-export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
-export LESS_TERMCAP_mr=$(tput rev)
-export LESS_TERMCAP_mh=$(tput dim)
-export LESS_TERMCAP_ZN=$(tput ssubm)
-export LESS_TERMCAP_ZV=$(tput rsubm)
-export LESS_TERMCAP_ZO=$(tput ssupm)
-export LESS_TERMCAP_ZW=$(tput rsupm)
+# export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
+# export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
+# export LESS_TERMCAP_me=$(tput sgr0)
+# export LESS_TERMCAP_so=$(tput bold; tput setaf 3; tput setab 4) # yellow on blue
+# export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
+# export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 0) # black
+# export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
+# export LESS_TERMCAP_mr=$(tput rev)
+# export LESS_TERMCAP_mh=$(tput dim)
+# export LESS_TERMCAP_ZN=$(tput ssubm)
+# export LESS_TERMCAP_ZV=$(tput rsubm)
+# export LESS_TERMCAP_ZO=$(tput ssupm)
+# export LESS_TERMCAP_ZW=$(tput rsupm)
 
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
@@ -231,6 +237,7 @@ function vim() {
 alias vi=vim
 alias l=ls
 alias c=cd
+alias tor='~/tor/Browser/start-tor-browser'
 alias gits='git s'
 alias gitl='git l'
 alias .env='. env/bin/activate'
@@ -249,7 +256,6 @@ export LESSOPEN='|~/.lessfilter %s'
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # B careful
-xset r rate 200 30
 
 alias ys='yaourt --noconfirm -S'
 alias yr='yaourt -R'
@@ -327,26 +333,39 @@ alias vimt='vim ~/.tmux.conf'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+function made() {
+  cd $1
+  shift
+  make $@
+  cd -
+}
 
-# function man() {
-#     LESS_TERMCAP_md=$'\e[01;31m' \
-#     LESS_TERMCAP_me=$'\e[0m' \
-#     LESS_TERMCAP_se=$'\e[0m' \
-#     LESS_TERMCAP_so=$'\e[01;44;33m' \
-#     LESS_TERMCAP_ue=$'\e[0m' \
-#     LESS_TERMCAP_us=$'\e[01;32m' \
-#     command man "$@"
-# }
+function document() {
+  pandoc --reference-docx=.reference.docx `basename $1 .md`.md -o `basename $1 .md`.docx
+}
+
+alias ed="rlwrap ed -p'🌂  '"
+
+alias wim='vim -c Write'
+
+function man() {
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[01;44;33m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    command man "$@"
+}
 export LESS="--RAW-CONTROL-CHARS"
 
-alias ctop="rlwrap ocaml"
-
 # Use colors for less, man, etc.
-source ~/.LESS_TERMCAP
+# source ~/.LESS_TERMCAP
 
 export PATH="$PATH:$HOME/.gem/ruby/2.3.0/bin" # Add RVM to PATH for scripting
 
 alias smount='sudo mount -o gid=charles,fmask=113,umask=000,dmask=002'
+alias xcopy='xclip -selection clipboard'
 
 alias gc='google-chrome-stable --force-device-scale-factor=2'
 # eval $(opam config env)

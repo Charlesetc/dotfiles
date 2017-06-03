@@ -18,3 +18,5 @@
 	ui = true
 [core]
 	excludesfile = /home/charles/.gitignore
+[push]
+	default = simple

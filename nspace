@@ -1,0 +1,46 @@
+#!/bin/bash
+
+name=$(basename $(pwd))
+
+style=kate
+
+flags=" -s --highlight-style $style"
+
+if [ -f "$name.html" ] ; then
+  flags="$flags -A $name.html "
+fi
+
+if [ -f "$name.css" ] ; then
+  flags="$flags -c /$name.css "
+  cp $name.css build/$name.css
+fi
+
+find . -name "*.md" | while read file ; do
+  dname=`dirname "$file"`
+  bname=$dname/`basename "$file" .md`
+
+  mkdir -p build/$dname
+
+  fileflags=""
+
+  if [ -f "$bname.html" ] ; then
+    fileflags="$fileflags -A $bname.html "
+  fi
+
+  if [ -f "$bname.css" ] ; then
+    cp $bname.css build/$bname.css
+    fileflags="$fileflags -c ./$bname.css "
+  fi
+
+  echo pandoc $file $fileflags $flags -o build/$bname.html
+  pandoc $file $fileflags $flags -o build/$bname.html
+done
+
+
+# static files
+
+if [ -d "static" ] ; then
+  cp ./static/* build
+fi
+
+
