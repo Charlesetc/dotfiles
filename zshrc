@@ -5,6 +5,8 @@ export GOPATH=~/.go
 #
 export HOST='{pixel}'
 
+PATH=$PATH:/usr/lib/postgresql/9.6/bin
+
 . ~/.profile
 
 # Path to your oh-my-zsh installation.
@@ -41,9 +43,9 @@ LightGrey="0;37"
 Black="30"
 DarkGrey="1;30"
 
-LS_COLORS=$LS_COLORS:"di=$Purple:"
+LS_COLORS=$LS_COLORS:"di=$LightGrey:"
 LS_COLORS=$LS_COLORS:"ex=$Cyan:"
-LS_COLORS=$LS_COLORS:"ln=$Yellow:"
+LS_COLORS=$LS_COLORS:"ln=$LightGreen:"
 export LS_COLORS
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -359,6 +361,8 @@ function man() {
 }
 export LESS="--RAW-CONTROL-CHARS"
 
+alias focus='focuswriter'
+
 # Use colors for less, man, etc.
 # source ~/.LESS_TERMCAP
 
@@ -367,6 +371,7 @@ export PATH="$PATH:$HOME/.gem/ruby/2.3.0/bin" # Add RVM to PATH for scripting
 alias smount='sudo mount -o gid=charles,fmask=113,umask=000,dmask=002'
 alias xcopy='xclip -selection clipboard'
 
+alias python='python3'
 alias gc='google-chrome-stable --force-device-scale-factor=2'
 # eval $(opam config env)
 #

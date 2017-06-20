@@ -9,6 +9,7 @@ endif
 " Required:
 set runtimepath+=~/.vim/bundle/neobundle.vim/
 set runtimepath+=~/.jsx/after
+set encoding=utf-8
 
 " Required:
 call neobundle#begin(expand('~/.vim/bundle/'))
@@ -20,11 +21,14 @@ NeoBundle 'flazz/vim-colorschemes'
 " NeoBundle 'mkitt/tabline.vim'
 NeoBundle 'dleonard0/pony-vim-syntax'
 NeoBundle 'tpope/vim-fugitive'
+
+NeoBundle 'reasonml/vim-reason'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'reedes/vim-colors-pencil'
 NeoBundle 'reedes/vim-pencil'
 NeoBundle 'junegunn/goyo.vim'
+NeoBundle 'dracula/vim'
 NeoBundle 'junegunn/limelight.vim'
 NeoBundle 'nanki/treetop.vim'
 NeoBundle 'reedes/vim-textobj-quote'
@@ -67,16 +71,16 @@ filetype plugin indent on
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 
-if executable('ocamlmerlin')
-  " To set the log file and restart:
-  let s:ocamlmerlin=substitute(system('which ocamlmerlin'),'ocamlmerlin\n$','','') . "../share/ocamlmerlin/vim/"
-  execute "set rtp+=".s:ocamlmerlin
-endif
-if executable('refmt')
-  let s:reason=substitute(system('which refmt'),'refmt\n$','','') . "../share/reason/editorSupport/VimReason"
-  execute "set rtp+=".s:reason
-  let g:syntastic_reason_checkers=['merlin']
-endif
+" if executable('ocamlmerlin')
+"   " To set the log file and restart:
+"   let s:ocamlmerlin=substitute(system('which ocamlmerlin'),'ocamlmerlin\n$','','') . "../share/ocamlmerlin/vim/"
+"   execute "set rtp+=".s:ocamlmerlin
+" endif
+" if executable('refmt')
+  " let s:reason=substitute(system('which refmt'),'refmt\n$','','') . "../share/reason/editorSupport/VimReason"
+  " execute "set rtp+=".s:reason
+  " let g:syntastic_reason_checkers=['merlin']
+" endif
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -246,7 +250,7 @@ nnoremap gd <C-d>
 
 set background=dark
 " colorscheme Tomorrow-Night-Eighties
-colorscheme MountainDew
+colorscheme dracula
 
 " hi comment ctermfg=violet
 " set background=light
@@ -324,16 +328,19 @@ autocmd BufWritePost *.re ReasonPrettyPrint
 
 function Writen()
   :SoftPencil
-  " :colorscheme Tomorrow-Night-E
+  " :colorscheme abra
   :call textobj#quote#init()
   :Goyo
-  :hi normal ctermbg=black
-  :Limelight 0.6
-  :hi normal ctermbg=none
-  :set showtabline=0
-  :hi nontext ctermbg=none
-  :hi statusline ctermbg=none ctermfg=340
-  :hi statuslinenc ctermbg=none
+  :hi title ctermbg=none ctermfg=grey
+  " :set showtabline=1
+  :hi nontext ctermbg=none ctermfg=white
+  :hi tablinesel ctermbg=none ctermfg=white
+  :hi tabline ctermbg=none ctermfg=white
+  :hi tablinefill ctermbg=none ctermfg=white
+  :hi statusline ctermbg=none ctermfg=white
+  :hi statuslinenc ctermbg=none ctermfg=white
+  :hi title ctermbg=none ctermfg=white
+  :hi markdownH1 ctermfg=grey
   :hi vertsplit ctermbg=none
 endfunction
 
@@ -344,6 +351,8 @@ hi comment ctermfg=33
 hi EnclosingExpr ctermbg=None ctermfg=magenta
 
 " au BufRead,BufNewFile *.re set filetype=rust
+au BufRead,BufNewFile *.eliom set filetype=ocaml
+au BufRead,BufNewFile *.eliomi set filetype=ocaml
 let g:textobj#quote#singleDefault = "''"
 let g:limelight_conceal_ctermfg = 0
 
@@ -359,3 +368,35 @@ noremap <SPACE> <Nop>
 " FUZZY FINDER:
 set rtp+=~/.fzf
 noremap <Leader>o :FZF<CR>
+" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
+let s:opam_share_dir = system("opam config var share")
+let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
+
+let s:opam_configuration = {}
+
+function! OpamConfOcpIndent()
+  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
+endfunction
+let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
+
+function! OpamConfOcpIndex()
+  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
+endfunction
+let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
+
+function! OpamConfMerlin()
+  let l:dir = s:opam_share_dir . "/merlin/vim"
+  execute "set rtp+=" . l:dir
+endfunction
+let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+
+let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
+for tool in s:opam_packages
+  " Respect package order (merlin should be after ocp-index)
+  if count(s:opam_available_tools, tool) > 0
+    call s:opam_configuration[tool]()
+  endif
+endfor
+" ## end of OPAM user-setup addition for vim / base ## keep this line
