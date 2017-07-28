@@ -23,10 +23,12 @@ NeoBundle 'dleonard0/pony-vim-syntax'
 NeoBundle 'tpope/vim-fugitive'
 
 NeoBundle 'reasonml/vim-reason'
+NeoBundle 'JuliaEditorSupport/julia-vim'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'reedes/vim-colors-pencil'
 NeoBundle 'reedes/vim-pencil'
+NeoBundle 'owickstrom/vim-colors-paramount'
 NeoBundle 'junegunn/goyo.vim'
 NeoBundle 'dracula/vim'
 NeoBundle 'junegunn/limelight.vim'
@@ -250,7 +252,9 @@ nnoremap gd <C-d>
 
 set background=dark
 " colorscheme Tomorrow-Night-Eighties
-colorscheme dracula
+" colorscheme dracula
+colorscheme mango
+" colorscheme paramount
 
 " hi comment ctermfg=violet
 " set background=light
@@ -346,12 +350,14 @@ endfunction
 
 command Write exec Writen()
 command WW exec Writen()
-hi comment ctermfg=33
+hi comment ctermfg=280
 
-hi EnclosingExpr ctermbg=None ctermfg=magenta
+" hi EnclosingExpr ctermbg=None ctermfg=magenta
 
 " au BufRead,BufNewFile *.re set filetype=rust
 au BufRead,BufNewFile *.eliom set filetype=ocaml
+au BufRead,BufNewFile *.brie set filetype=brie
+au BufRead,BufNewFile *.pear set filetype=brie
 au BufRead,BufNewFile *.eliomi set filetype=ocaml
 let g:textobj#quote#singleDefault = "''"
 let g:limelight_conceal_ctermfg = 0
@@ -368,6 +374,7 @@ noremap <SPACE> <Nop>
 " FUZZY FINDER:
 set rtp+=~/.fzf
 noremap <Leader>o :FZF<CR>
+" Wtf is all of this:
 " ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
 let s:opam_share_dir = system("opam config var share")
 let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
@@ -399,4 +406,6 @@ for tool in s:opam_packages
     call s:opam_configuration[tool]()
   endif
 endfor
+
+:abbreviate pry require 'pry'; binding.pry
 " ## end of OPAM user-setup addition for vim / base ## keep this line
