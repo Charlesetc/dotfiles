@@ -4,8 +4,17 @@ export PATH=$HOME/.bin:$PATH
 export GOPATH=~/.go
 #
 export HOST='{pixel}'
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LANGUAGE="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+export LC_CTYPE=""
+export LANG="en_US.UTF-8"
+
 
 PATH=$PATH:/usr/lib/postgresql/9.6/bin
+PATH=$PATH:~/.julia/.install/bin
 
 . ~/.profile
 
@@ -13,6 +22,7 @@ PATH=$PATH:/usr/lib/postgresql/9.6/bin
   export ZSH=/home/charles/.oh-my-zsh
 
 export LD_LIBRARY_PATH=/usr/local/lib:"$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH=~/.julia/.install/lib:"$LD_LIBRARY_PATH"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -43,10 +53,10 @@ LightGrey="0;37"
 Black="30"
 DarkGrey="1;30"
 
-LS_COLORS=$LS_COLORS:"di=$LightGrey:"
-LS_COLORS=$LS_COLORS:"ex=$Cyan:"
-LS_COLORS=$LS_COLORS:"ln=$LightGreen:"
-export LS_COLORS
+# LS_COLORS=$LS_COLORS:"di=$LightGrey:"
+# LS_COLORS=$LS_COLORS:"ex=$Cyan:"
+# LS_COLORS=$LS_COLORS:"ln=$LightGreen:"
+# export LS_COLORS
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=103
@@ -361,7 +371,10 @@ function man() {
 }
 export LESS="--RAW-CONTROL-CHARS"
 
-alias focus='focuswriter'
+function focus() {
+  touch $1
+  focuswriter $@
+}
 
 # Use colors for less, man, etc.
 # source ~/.LESS_TERMCAP
@@ -369,7 +382,9 @@ alias focus='focuswriter'
 export PATH="$PATH:$HOME/.gem/ruby/2.3.0/bin" # Add RVM to PATH for scripting
 
 alias smount='sudo mount -o gid=charles,fmask=113,umask=000,dmask=002'
+alias whitespace="find * -type f -exec sed -i 's/ *$//' {} +"
 alias xcopy='xclip -selection clipboard'
+alias scheme='rlwrap bigloo'
 
 alias python='python3'
 alias gc='google-chrome-stable --force-device-scale-factor=2'

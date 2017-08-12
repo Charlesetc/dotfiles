@@ -19,7 +19,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'goatslacker/mango.vim'
 NeoBundle 'flazz/vim-colorschemes'
 " NeoBundle 'mkitt/tabline.vim'
-NeoBundle 'dleonard0/pony-vim-syntax'
+NeoBundle 'jakwings/vim-pony'
 NeoBundle 'tpope/vim-fugitive'
 
 NeoBundle 'reasonml/vim-reason'
