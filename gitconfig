@@ -9,6 +9,8 @@
   co = checkout
   l = log
   charles = "!f() { git clone git@github.com:Charlesetc/$1; }; f"
+  hub = "!f() { git clone git@github.com:$1; }; f"
+  lab = "!f() { git clone git@gitlab.com:$1; }; f"
   d = diff
   dh = diff HEAD
   dhh = diff HEAD~ HEAD

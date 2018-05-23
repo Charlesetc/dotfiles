@@ -4,6 +4,7 @@ install:
 	cp gitconfig ~/.gitconfig
 	cp spacemacs ~/.spacemacs
 	cp tmux.conf ~/.tmux.conf
+	cp steeef.zsh-theme ~/.oh-my-zsh/themes/steeef.zsh-theme
 
 save:
 	cp ~/.vimrc vimrc
@@ -11,6 +12,7 @@ save:
 	cp ~/.gitconfig gitconfig
 	cp ~/.spacemacs spacemacs
 	cp ~/.tmux.conf tmux.conf
+	cp ~/.oh-my-zsh/themes/steeef.zsh-theme steeef.zsh-theme
 
 push:
 	git a

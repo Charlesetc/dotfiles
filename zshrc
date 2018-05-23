@@ -3,7 +3,7 @@
 export PATH=$HOME/.bin:$PATH
 export GOPATH=~/.go
 #
-export HOST='{pixel}'
+export HOST='{home}'
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
