@@ -273,7 +273,7 @@ alias ys='yaourt --noconfirm -S'
 alias yr='yaourt -R'
 alias vundle='vim +PluginInstall +qall'
 alias vimz='vim ~/.zshrc'
-alias vimzh='vim ~/.zsh_history'
+alias vimzh='vim ~/.zhistory'
 alias vimv='vim ~/.vimrc'
 alias vimd='/usr/bin/vim'
 alias sl=ls
@@ -344,6 +344,7 @@ bindkey -e
 alias vimt='vim ~/.tmux.conf'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f /usr/share/autojump/autojump.zsh ] && source /usr/share/autojump/autojump.zsh
 
 function made() {
   cd $1
@@ -388,5 +389,6 @@ alias scheme='rlwrap bigloo'
 
 alias python='python3'
 alias gc='google-chrome-stable --force-device-scale-factor=2'
+alias apt='sudo apt install'
 # eval $(opam config env)
 #

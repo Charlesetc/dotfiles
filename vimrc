@@ -87,7 +87,7 @@ NeoBundleCheck
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-set clipboard=unnamed
+set clipboard=unnamedplus
 set incsearch
 
 set nonu
@@ -368,6 +368,9 @@ let g:html_use_css = 1
 imap yw <ESC>
 " autocmd FileType ocaml source /home/charles/.opam/4.02.3/share/ocp-indent/vim/indent/ocaml.vim
 set norelativenumber
+
+" Commentary
+autocmd FileType sml setlocal commentstring=(*\ %s\ *)
 
 let mapleader="\<SPACE>"
 noremap <SPACE> <Nop>
