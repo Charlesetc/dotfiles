@@ -105,8 +105,8 @@ hi Pmenu ctermbg=black ctermfg=white
 
 " Leader
 " Make space leader.
-let mapleader="\<SPACE>"
-noremap <SPACE> <Nop>
+let mapleader=","
+noremap , <Nop>
 
 
 noremap <LEADER>1 :buffer 1<CR>
@@ -117,15 +117,16 @@ noremap <LEADER>5 :buffer 5<CR>
 noremap <LEADER>6 :buffer 6<CR>
 
 " some more folding
-noremap ,, za
-noremap ,a zA
-noremap ,t zR
-noremap ,c zM
+noremap ,, :MerlinErrorCheck<CR>
+noremap ,t :MerlinTypeOf<CR>
+noremap ,l :MerlinLocate<CR>
+inoremap ,. <C-x><C-o>
 
 " Copy and past to clipboard
-nnoremap <LEADER>t :bn<CR>
-nnoremap <LEADER>T :bp<CR>
+nnoremap m :bn<CR>
+nnoremap <LEADER>n :bp<CR>
 noremap <LEADER>w :w<CR>
+noremap yw :w<CR>
 noremap <LEADER>q :q!<CR>
 noremap <LEADER>s :%s/
 noremap <Leader><Tab> :bn<CR>
@@ -140,20 +141,16 @@ noremap <Leader>i :vsplit<CR>
 noremap <Leader>e :split<CR>
 noremap <Leader>* :vertical ball<CR>
 noremap <Leader>a g<C-g>
-noremap <Leader>A :Ag 
 noremap <Leader>` <C-w>j:close<CR>
-noremap <Leader>/ :Commentary<CR>
-noremap <Leader>gb :Gblame<CR>
-noremap <Leader><Leader> :w<CR>
+noremap <SPACE>/ :Commentary<CR>
+noremap <Leader>g :Gblame<CR>
+" noremap <Leader><Leader> :w<CR>
 
 noremap <Leader>r :!clear;make<CR>
 
 " pretty awesome:
 noremap <Leader>ve ^i <ESC>vk$s
 noremap <Leader>vn a<CR><ESC>
-
-noremap <Leader>, :! ctags --file-scope=no -R `pwd`; mv tags ~/.vim_ctags<CR>
-set tags=~/.vim_ctags
 
 "" Remapping
 
@@ -174,11 +171,11 @@ noremap v <C-v>
 " Moving around
 nmap do ddeo
 
-nmap <Leader>j <C-w>j
-nmap <Leader>k <C-w>k
-nmap <Leader>l <C-w>l
-nmap <Leader>h <C-w>h
-nmap <Leader>c :close<CR>
+nmap <SPACE>j <C-w>j
+nmap <SPACE>k <C-w>k
+nmap <SPACE>l <C-w>l
+nmap <SPACE>h <C-w>h
+nmap <LEADER>c :close<CR>
 
 nnoremap <S-o> o<ESC>
 
@@ -290,6 +287,8 @@ colorscheme mango
 
 set nohlsearch
 
+highlight search ctermfg=red ctermbg=none
+
 highlight todo ctermfg=220 ctermbg=None
 highlight linenr ctermfg=darkgrey ctermbg=None
 highlight cursorlinenr ctermfg=74 ctermbg=None " blue
@@ -371,12 +370,10 @@ set norelativenumber
 
 " Commentary
 autocmd FileType sml setlocal commentstring=(*\ %s\ *)
-
-let mapleader="\<SPACE>"
-noremap <SPACE> <Nop>
 " FUZZY FINDER:
 set rtp+=~/.fzf
-noremap <Leader>o :FZF<CR>
+noremap <SPACE>o :FZF<CR>
+noremap <LEADER>f :FZF<CR>
 " Wtf is all of this:
 " ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
 let s:opam_share_dir = system("opam config var share")
@@ -399,6 +396,9 @@ function! OpamConfMerlin()
   execute "set rtp+=" . l:dir
 endfunction
 let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+
+let &colorcolumn=join(range(81,999),",")
+highlight ColorColumn ctermbg=235
 
 let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
 let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages

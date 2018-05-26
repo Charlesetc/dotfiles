@@ -20,5 +20,6 @@
 	ui = true
 [core]
 	excludesfile = /home/charles/.gitignore
+  pager = less -X -F
 [push]
 	default = simple
