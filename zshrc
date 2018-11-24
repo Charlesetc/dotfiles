@@ -1,4 +1,5 @@
 export PATH=$HOME/.bin:$PATH
+export PATH=$HOME/.gem/ruby/2.5.0/bin:$PATH
 export GOPATH=~/.go
 export HOST='{home}'
 export LC_ALL=en_US.UTF-8
@@ -16,6 +17,7 @@ export CASE_SENSITIVE="true"
 export LESS='-R'
 export LESSOPEN='|~/.lessfilter %s'
 export EDITOR='vim'
+export BAT_THEME='GitHub'
 
 . ~/.profile
 
@@ -37,7 +39,7 @@ Black="30"
 DarkGrey="1;30"
 
 source $ZSH/oh-my-zsh.sh
-export SAVEHIST=10000
+export SAVEHIST=1000000
 export HISTFILE=~/.zhistory
 setopt nologin
 setopt INC_APPEND_HISTORY
@@ -61,10 +63,10 @@ function vim() {
       echo ""
     else
       print -s vim $FILE
-      /usr/bin/vim $FILE
+      /usr/local/bin/vim -X $FILE
     fi
   else
-    /usr/bin/vim $@
+    /usr/local/bin/vim -X $@
   fi
 }
 
@@ -92,6 +94,7 @@ alias vi=vim
 alias l=ls
 alias c=cd
 alias gits='git s'
+alias gitd='git d'
 alias gitl='git l'
 alias .z='. ~/.zshrc'
 alias unquote='ruby -e "eval (\"puts \" + gets)"'
@@ -105,7 +108,7 @@ alias vimz='vim ~/.zshrc'
 alias vimzh='vim ~/.zhistory'
 alias vimv='vim ~/.vimrc'
 alias static='ruby -run -e httpd . -p 9000'
-alias vimd='/usr/bin/vim'
+alias vimd='/usr/local/bin/vim'
 alias sl=ls
 alias ed="rlwrap ed -p'🌂  '"
 alias whitespace="find * -type f -exec sed -i 's/ *$//' {} +"
@@ -113,3 +116,5 @@ alias xcopy='xclip -selection clipboard'
 alias scheme='rlwrap bigloo'
 alias python='python3'
 alias apt='sudo apt install'
+
+stty -ixon
