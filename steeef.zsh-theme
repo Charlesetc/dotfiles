@@ -20,24 +20,11 @@ autoload -U add-zsh-hook
 autoload -Uz vcs_info
 
 #use extended color palette if available
-if [[ $terminfo[colors] -ge 256 ]]; then
-    turquoise="%F{81}"
-    orange="%F{162}"
-    purple="%F{135}"
-    hotpink="%F{161}"
-    limegreen="%F{118}"
-else
-    turquoise="%F{81}"
-    orange="%F{162}"
-    purple="%F{135}"
-    hotpink="%F{161}"
-    limegreen="%F{118}"
-    # turquoise="%F{cyan}"
-    # orange="%F{yellow}"
-    # purple="%F{magenta}"
-    # hotpink="%F{red}"
-    # limegreen="%F{green}"
-fi
+turquoise="%F{81}"
+orange="%F{162}"
+purple="%F{135}"
+hotpink="%F{161}"
+limegreen="%F{235}"
 
 # enable VCS systems you use
 zstyle ':vcs_info:*' enable git svn
@@ -56,8 +43,8 @@ zstyle ':vcs_info:*:prompt:*' check-for-changes true
 PR_RST="%f"
 FMT_BRANCH="(%{$turquoise%}%b%u%c${PR_RST})"
 FMT_ACTION="(%{$limegreen%}%a${PR_RST})"
-FMT_UNSTAGED="%{$orange%}●"
-FMT_STAGED="%{$limegreen%}●"
+FMT_UNSTAGED="%{$orange%}."
+FMT_STAGED="%{$limegreen%}."
 
 zstyle ':vcs_info:*:prompt:*' unstagedstr   "${FMT_UNSTAGED}"
 zstyle ':vcs_info:*:prompt:*' stagedstr     "${FMT_STAGED}"
@@ -91,11 +78,11 @@ function steeef_precmd {
         # check for untracked files or updated submodules, since vcs_info doesn't
         if git ls-files --other --exclude-standard 2> /dev/null | grep -q "."; then
             PR_GIT_UPDATE=1
-            FMT_BRANCH="(%{$turquoise%}%b%u%c%{$hotpink%}●${PR_RST})"
+            FMT_BRANCH="branch %{$turquoise%}%b%u%c%{$hotpink%}.${PR_RST}"
         else
-            FMT_BRANCH="(%{$turquoise%}%b%u%c${PR_RST})"
+            FMT_BRANCH="?branch:%{$turquoise%}%b%u%c${PR_RST}"
         fi
-        zstyle ':vcs_info:*:prompt:*' formats "${FMT_BRANCH} "
+        zstyle ':vcs_info:*:prompt:*' formats "${FMT_BRANCH} -> unit"
 
         vcs_info 'prompt'
         PR_GIT_UPDATE=
@@ -104,5 +91,5 @@ function steeef_precmd {
 add-zsh-hook precmd steeef_precmd
 
 PROMPT=$'
-%{$purple%}%n${PR_RST} at %{$orange%}%m${PR_RST} in %{$limegreen%}%~${PR_RST} $vcs_info_msg_0_$(virtualenv_info)
+val %{$purple%}%n${PR_RST} : path:%{$orange%}%~${PR_RST} -> $vcs_info_msg_0_
 $ '
