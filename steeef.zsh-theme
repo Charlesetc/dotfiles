@@ -95,5 +95,5 @@ function steeef_precmd {
 add-zsh-hook precmd steeef_precmd
 
 PROMPT=$'
-val %{$purple%}%n${PR_RST} : path:%{$orange%}%~${PR_RST} ->$vcs_info_msg_0_ unit
+%{$purple%}fn${PR_RST} %{$orange%}%~${PR_RST} ->$vcs_info_msg_0_ unit
 $ '
